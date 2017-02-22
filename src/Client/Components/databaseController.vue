@@ -47,8 +47,8 @@
 module.exports = {
   data: ()=> {
     return {
-      pokemon: {},
-      pokemons: [],
+      pokemon: null,
+      pokemons: null,
       generations: {},
       allGen: [], 
       showAll: false,
