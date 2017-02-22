@@ -5,7 +5,13 @@
     <title>pokemon_encounter</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <router-link to='/'><a href="#">Sign Up</a></router-link>
+      <router-link to='/signin'><a href="#">Log In</a></router-link>
+      <router-link to='/database'><a href="#">Avalible Pokemon</a></router-link>
+      <router-link to='/moves'><a href="#">Moves</a></router-link>
+      <router-view></router-view>
+    </div>
     <script src="/dist/build.js"></script>
   </body>
 </html>
