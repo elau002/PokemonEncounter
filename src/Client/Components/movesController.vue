@@ -25,7 +25,7 @@
        }  
      },
      created () {
-      this.getAllMoves();
+      // this.getAllMoves();
       // this.getMove();
      },
      methods: {
@@ -41,7 +41,7 @@
        },
        getMove: function (name) {
                let temp = [];
-      for(let i = 358; i < 622; i++) {
+      for(let i = 359; i < 622; i++) {
         temp.push(i);
       }
          Promise.all(temp.map((number, index)=> {
