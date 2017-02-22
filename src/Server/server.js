@@ -11,9 +11,3 @@ app.use('/', router);
 app.listen(PORT, function() {
   console.log('Express listening on port ', PORT);
 });
-
-// app.get('/api/pokemon', function(req, res) {
-//   request(pkmnURL + 'pokemon/1/', function(response, body) {
-//     res.send(body);
-//   });
-// });
