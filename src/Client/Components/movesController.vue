@@ -16,7 +16,7 @@
   </div>
  </template>
 
- <<script>
+ <script>
    module.exports = {
      data: ()=> {
        return {
@@ -32,7 +32,6 @@
        getAllMoves: function () {
         this.$http.get('http://localhost:4824/api/move/all')
         .then((res)=> {
-          console.log(res.body);
           this.$data.allMoves = res.body;
         })
         .catch((err)=> {
