@@ -8,7 +8,6 @@ module.exports = {
     publicPath: '/dist/',
     filename: 'build.js'
   },
-  devtool: 'source-map',
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.common.js'
