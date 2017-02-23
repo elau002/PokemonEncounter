@@ -1,20 +1,21 @@
 const mongoose = require('mongoose');
+const Mixed = mongoose.Schema.Types.Mixed;
 
 const pokemonSchema = mongoose.Schema({
   id: Number,
   name: String,
   weight: Number,
-  abilities: { type: Array, 'default': [] },
-  stats: { type: Array, 'default': [] },
+  abilities: Mixed,
+  stats: Mixed,
   sprites: String,
-  types: { type: Array, 'default': [] },
-  moves: {type: Array, 'default': [] }
+  types: Mixed,
+  moves: Mixed
 });
 
 const trainerSchema = mongoose.Schema({
   username: String,
   password: String,
-  pokemon: { type: Array, 'default': [] }
+  pokemon: Mixed
 });
 
 const moveSchema = mongoose.Schema({
@@ -24,18 +25,27 @@ const moveSchema = mongoose.Schema({
   type: String,
   power: Number,
   effect: String,
-  accuracy: { type: Number, 'default': null },
+  accuracy: Mixed,
   damageType: String,
 });
 
 const abilitySchema = mongoose.Schema({
   id: Number,
   name: String,
-  pokemon: { type: Array, 'default': [] },
+  pokemon: Mixed,
   effect: String
+});
+
+const typeSchema = mongoose.Schema({
+  id: Number,
+  name: String,
+  damageRelations: Mixed,
+  moves: Mixed,
+  pokemon: Mixed,
 });
 
 exports.pokemonSchema = pokemonSchema;
 exports.trainerSchema = trainerSchema;
 exports.moveSchema = moveSchema;
 exports.abilitySchema = abilitySchema;
+exports.typeSchema = typeSchema;
