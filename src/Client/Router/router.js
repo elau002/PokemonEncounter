@@ -2,28 +2,33 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import signUp from '../Components/signUpController.vue'; 
-import database from '../Components/databaseController.vue';
+import pokemon from '../Components/pokemonController.vue';
 import moves from '../Components/movesController.vue';
+import ability from '../Components/abilityController.vue';
 
 const logIn = {template: '<p>loggin place holder</p>' };
 
 const routes = [
   {
-    path: '/',
+    path: '/signup',
     component: signUp
   },
   {
-    path: '/signin',
+    path: '/login',
     component: logIn
   },
   {
-    path: '/database',
-    component: database
+    path: '/pokemon',
+    component: pokemon
   },
   {
     path: '/moves',
     component: moves
   },
+  {
+    path: '/abilities',
+    component: ability
+  }
 ];
 
 const router = new VueRouter ({
