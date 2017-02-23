@@ -22,6 +22,7 @@
       }
     },
     created () {
+      console.log(this)
       this.getAllTypes();
     },
     methods: {
@@ -34,15 +35,6 @@
           console.log(err);
         })
        },
-      getTypes: function () {
-        this.$http.get('http://localhost:4824/api/type/', { params: { id: number}})
-          .then((res) => {
-            console.log(res.body);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      },
     }
   }
 </script>

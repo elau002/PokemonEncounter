@@ -38,15 +38,6 @@
           console.log(err);
         })
        },
-       getMove: function (name) {
-        this.$http.get('http://localhost:4824/api/move', {params: {id : number} } )
-          .then((res) => {
-            console.log(res.body);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-       },
      }
    }
  </script>
