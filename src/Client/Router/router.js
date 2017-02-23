@@ -5,6 +5,7 @@ import signUp from '../Components/signUpController.vue';
 import pokemon from '../Components/pokemonController.vue';
 import moves from '../Components/movesController.vue';
 import ability from '../Components/abilityController.vue';
+import type from '../Components/typeController.vue';
 
 const logIn = {template: '<p>loggin place holder</p>' };
 
@@ -28,6 +29,10 @@ const routes = [
   {
     path: '/abilities',
     component: ability
+  },
+  {
+    path: '/type',
+    component: type
   }
 ];
 
