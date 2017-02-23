@@ -62,67 +62,24 @@ module.exports = {
       this.$http.get('http://localhost:4824/api/pokemon/all')
         .then((res)=> {
           this.$data.allGen = res.body;
+          [1,2,3,4,5,6].forEach((number)=> { this.generateGen(number, res.body, this.$data); })
         })
         .catch((err) => {
           console.log(err);
         })
     },
     GenPokemon: function (gen) {
-      let pokemons = this.$data.pokemons
-      let generation = this.generateGen(gen);
-      if(this.$data.generations[gen]) {
-        this.$data.pokemons = this.$data.generations[gen];
-      }
-      Promise.all(generation.map((number, index)=> {
-        return new Promise((resolve, reject)=> {
-          this.$http.get('http://localhost:4824/api/pokemon', { params: {id: number} })
-            .then((res) => {
-              resolve(res.body);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-          );
-      }))
-      .then((value)=>{ 
-        this.$data.generations[gen] = value;
-        this.$data.pokemons = value;
-      });
+         this.$data.pokemons = this.$data.generations[gen];
     },
-    generateGen: (gen)=> {
+    generateGen: (gen, arr, data)=> {
       let temp = [];
-      if (gen === 1) {
-        for (let i = 1; i < 152; i++) {
-          temp = temp.concat(i);
-        }
-      }
-      if (gen === 2) {
-        for (let i = 152; i < 252; i++) {
-          temp = temp.concat(i);
-        }
-      }
-      if (gen === 3) {
-        for (let i = 252; i < 387; i++) {
-          temp= temp.concat(i);
-        }
-      }
-      if (gen === 4) {
-        for (let i = 387; i < 494; i++) {
-          temp = temp.concat(i);
-        }
-      }
-      if (gen === 5) {
-        for (let i = 494; i < 650; i++) {
-          temp = temp.concat(i);
-        }
-      }
-      if (gen === 6) {
-        for (let i = 650; i < 722; i++) {
-          temp = temp.concat(i);
-        }
-      }
-      return temp;
+      if (gen === 1) {  temp = arr.slice(0, 151) }
+      if (gen === 2) {  temp = arr.slice(151, 251) }
+      if (gen === 3) {  temp= arr.slice(251, 386) }
+      if (gen === 4) {  temp = arr.slice(386, 493) }
+      if (gen === 5) {  temp = arr.slice(493, 649) }
+      if (gen === 6) {  temp = arr.slice(649, 721) }
+      data.generations[gen] =  temp
     },
   }
 }
