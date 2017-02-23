@@ -28,6 +28,14 @@ const moveSchema = mongoose.Schema({
   damageType: String,
 });
 
+const abilitySchema = mongoose.Schema({
+  id: Number,
+  name: String,
+  pokemon: { type: Array, 'default': [] },
+  effect: String
+});
+
 exports.pokemonSchema = pokemonSchema;
 exports.trainerSchema = trainerSchema;
 exports.moveSchema = moveSchema;
+exports.abilitySchema = abilitySchema;
