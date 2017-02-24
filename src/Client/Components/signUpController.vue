@@ -25,7 +25,9 @@ module.exports = {
         }
       this.$http.post('http://localhost:4824/api/trainer/signup', body)
         .then((res)=> {
-          this.$router.push('/database');
+          if(res.status === 208) {
+            window.alert("User already signed up. Try again");
+          }
         })
         .catch((err)=> {
           console.log(err);
