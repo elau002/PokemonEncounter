@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import signUp from '../Components/signUpController.vue'; 
-import pokemon from '../Components/pokemonController.vue';
-import moves from '../Components/movesController.vue';
 import ability from '../Components/abilityController.vue';
+import encounter from '../Components/encounterController.vue';
+import logIn from '../Components/logInController.vue';
+import moves from '../Components/movesController.vue';
+import pokemon from '../Components/pokemonController.vue';
+import signUp from '../Components/signUpController.vue'; 
 import type from '../Components/typeController.vue';
 
-const logIn = {template: '<p>loggin place holder</p>' };
 
 const routes = [
   {
@@ -33,11 +34,16 @@ const routes = [
   {
     path: '/type',
     component: type
+  },
+  {
+    path: '/encounter',
+    component: encounter,
   }
 ];
 
 const router = new VueRouter ({
   routes
 });
+
 
 export default router;
