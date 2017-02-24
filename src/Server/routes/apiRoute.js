@@ -10,6 +10,7 @@ router.get('/pokemon', pokemonHandler.getOnePokemon);
 router.get('/pokemon/all', pokemonHandler.getAllPokemon);
 
 router.post('/trainer/signup', trainerHandler.createTrainer);
+router.get('/trainer/login', trainerHandler.getTrainer);
 
 router.get('/move', moveHandler.getOneMove);
 router.get('/move/all', moveHandler.getAllMoves);

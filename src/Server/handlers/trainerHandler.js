@@ -31,18 +31,26 @@ exports.createTrainer = (req, res) => {
           if (err) {
             console.error(err);
           } 
-          let encounter = Math.floor((Math.random() * 720));
-          res.send({ number: encounter});
+          res.send(201);
         });
       });
-    } 
-    if (DBtrainer) {
-      bcrpyt.compare(trainer.password, DBtrainer.password, (err, valid)=> {
-        if (valid) {
-          let encounter = Math.floor((Math.random() * 720));
-          res.send({ number: encounter});
-        }
-      });
+    } else {
+      res.send(208);
     }
   });
 };
+
+exports.getTrainer = ((req, res) => {
+  let trainer = req.query;
+  exports.getTrainerDB(trainer.username, (err, DBtrainer)=> {
+    if (err) { console.error(err); }
+    bcrpyt.compare(trainer.password, DBtrainer.password, (err, valid)=> {
+      if (err) {
+        res.send(401);
+      }
+      if (valid) {
+        res.send('hello'), 304;
+      }
+    });
+  });
+});
