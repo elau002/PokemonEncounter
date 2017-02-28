@@ -1,9 +1,17 @@
 <template>
 <div>
     <h1> Types </h1>
-    <button v-if='!showAll' v-on:click.prevent="showAll = !showAll">Show All</button>
-    <button v-else v-on:click.prevent="showAll = !showAll">Hide All</button>
-    <div v-if="showAll">
+    <div v-if='selected'>
+      <form id='filterForm'>
+        <input type='text' v-model='filter'>
+        <input type='checkbox' id='pokeFilter' value='pokemon'>
+        <label > Pokemons </label>
+        <input type='checkbox' id='moveFilter' value='move'>
+        <label > Moves </label>
+        <input type='submit' v-on:click.prevent='findFilter(filter, $data)'>
+      </form>
+    </div> 
+    <div>
         <div v-for='types in allTypes' id='type'>
             <div v-on:click.prevent="showPokeOfType($data,types.name)" class='typeTag' v-bind:id='types.name'>
                 {{ types.name[0].toUpperCase() + types.name.slice(1) }}
@@ -13,12 +21,16 @@
             <div v-if='selected === types.name'>
                 <div>
                     <table id='pokeTable' sortable >
+                      <thead>
                         <tr>
                             <th> Pokemon </th>
                         </tr>
-                        <tr v-for='poke in types.pokemon' v-bind:id='types.name' colspan="3">
-                            <td v-on:click="getSingleQuery('pokemon', poke, $data)"> {{ poke[0].toUpperCase() + poke.slice(1) }} </td>
+                      </thead>
+                      <tbody>
+                        <tr v-for='poke in types.pokemon' v-bind:id='types.name' >
+                            <td v-on:click="getSinglePokemonByName($http, poke, $data)"> {{ poke[0].toUpperCase() + poke.slice(1) }} </td>
                         </tr>
+                      </tbody>
                     </table>
                 </div>
                 <div>
@@ -27,13 +39,41 @@
                             <th> Move </th>
                         </tr>
                         <tr v-for='move in types.moves' v-bind:id='types.name'>
-                            <td v-on:click="getSingleQuery('move', move)"> {{ move[0].toUpperCase() + move.slice(1) }} </td>
+                            <td v-on:click="getSingleQuery($http, 'move', move, $data)"> {{ move[0].toUpperCase() + move.slice(1) }} </td>
                         </tr>
                     </table>
                 </div>
                 <div id='moreInfo' v-if='moreInfo'>
-                    <div id='infoDiv'>
-                        {{ infoSelect.name }} rQCewZKjTe CGBHAefcTG JRiRjdFMGH LtvrmKYTGI TDZPrZtNXh rBtiLwDLBL qoHsrZdijr cIxzYHDBaH JmOvHpXCYj ruseSYMhlL
+                    <div id='infoDiv' v-if='infoSelect.query === "pokemon" '>
+                      <p>Number: {{infoSelect.id}}</p>
+                      <img :src="infoSelect.sprites"/>
+                      <p> {{ infoSelect.name[0].toUpperCase() + infoSelect.name.slice(1) }}</p>
+                      <p>Weight: {{infoSelect.weight/10}} kg </p>
+                      <p v-for='ability in infoSelect.abilities'> {{ability.ability[0].toUpperCase() + ability.ability.slice(1)}}</p>
+                      <ul>
+                        <li v-for='stat in infoSelect.stats'>
+                          <p>{{stat.name[0].toUpperCase() + stat.name.slice(1)}} : {{stat.value}} </p>
+                        </li>
+                      </ul>
+                      <ul>
+                        <li v-for='trait in infoSelect.types.slice().sort((a,b)=>{return a.slot-b.slot})'>
+                          <p>{{trait.slot}}: <div class='typeTag' v-bind:id='trait.type'> {{trait.type[0].toUpperCase() + trait.type.slice(1)}} </div> </p>
+                        </li>
+                      </ul>
+                    </div>
+                    <div id='infoDiv' v-else-if='infoSelect.query === "move" '>
+                      <p> {{ infoSelect.name[0].toUpperCase() + infoSelect.name.slice(1) }}</p>
+                      <div>
+                        <p v-if='infoSelect.power'>Damage : {{infoSelect.power}}</p>
+                        <p v-if='infoSelect.accuracy'>Accuracy: {{infoSelect.accuracy}}</p>
+                        <p>PP: {{infoSelect.pp}} </p>
+                        <ul>
+                          <li>
+                            <p>Type: <div class='typeTag' v-bind:id='infoSelect.damageType'>{{infoSelect.damageType[0].toUpperCase() + infoSelect.damageType.slice(1)}}</div> </p>
+                          </li>
+                        </ul>
+                        <p>Effect: {{infoSelect.effect}}</p>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -47,32 +87,61 @@
     data: ()=> {
       return {
         allTypes: null, 
-        showAll: false,
         selected: null,
         moreInfo: null,
         infoSelect: null,
+        filter: '',
+        filterPoke: true,
+        filterMove: true,
       }
     },
     created () {
-      this.getAllTypes();
+      this.getAllTypes(this.$http, this.$data);
     },
     methods: {
-      getAllTypes: function () {
-        this.$http.get('http://localhost:4824/api/type/all')
+      getAllTypes: (http, data)=> {
+        http.get('http://localhost:4824/api/type/all')
         .then((res)=> {
-          this.$data.allTypes = res.body;
-          console.log(res.body);
+          data.allTypes = res.body;
         })
         .catch((err)=> {
           console.log(err);
         })
        },
       showPokeOfType: (data, type)=> {
-        if(data.selected != type) {
+        if(data.selected !== type) {
           data.selected = type;
         } else {
           data.selected = null;
         }
+          data.moreInfo = null;
+      },
+      findFilter:(string, data) => {
+        filterPokes = document.getElementById('pokeFilter');
+        filterMoves = document.getElementById('moveFilter');
+        pokeTable = document.getElementById('pokeTable').getElementsByTagName('tr');
+        moveTable = document.getElementById('moveTable').getElementsByTagName('tr');
+        if(filterPokes.checked) {
+          for(let i = 1; i < pokeTable.length; i++) {
+            if(pokeTable[i].innerText.toLowerCase().includes(string)) {
+              pokeTable[i].style.display = '';
+            } else {
+              pokeTable[i].style.display = 'none'; 
+            }
+          }
+          filterPokes.checked = false;
+        }
+        if(filterMoves.checked) {
+          for(let i = 1; i < moveTable.length; i++) {
+            if(moveTable[i].innerText.toLowerCase().includes(string)) {
+              moveTable[i].style.display = '';
+            } else {
+              moveTable[i].style.display = 'none'; 
+            }
+          }
+          filterMoves.checked = false;
+        }
+        data.filter = '';
       }
     }
   }
@@ -80,6 +149,9 @@
 
 
 <style>
+    #filterForm {
+      display: inline;
+    }
     .typeTag {
         border: 1px solid black;
         border-radius: 8px;
@@ -424,26 +496,46 @@
         padding: 1% 1% 1% 0px;
     }
     #moreInfo {
-        border: 1px solid black;
+        border: 1px solid #B3BFC7;
         left: 2%;
         position: relative;
         width: 40%;
         height: 40%;
         z-index: 10;
         overflow: auto;
+        max-height: 400px;
+        border-radius: 8px;
+        background: #FAFAFA;
+        box-shadow: 5px 5px 5px grey;
     }
+    ::-webkit-scrollbar {
+      border: 1px solid slategrey;
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    }
+
     #pokeTable {
         box-shadow: 5px 5px 5px grey;
-        height: 500px;
+        height: auto;
+        max-height: 450px;
         position: relative;
         overflow: auto;
         float: left;
     }
     #moveTable {
         box-shadow: 5px 5px 5px grey;
-        height: 500px;
+        height: auto;
+        max-height: 450px;
         overflow: auto;
-        float: right;
+        float: left;
+        padding-left: 1%;
         z-index: -1;
     }
 </style>
