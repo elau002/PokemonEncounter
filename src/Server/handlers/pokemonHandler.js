@@ -14,11 +14,22 @@ exports.createPokemonDB = (pokemon, cb)=> {
 };
 
 exports.getPokemonDB = (pokemon, cb) => {
-  Pokemon.findOne( {id: pokemon} )
-    .exec((err, pokemon)=>{
-      if (err) { console.error(err); }
-      cb(null, pokemon);
-    });
+  console.log(typeof pokemon);
+  if (typeof pokemon === 'number') {
+    Pokemon.findOne( {id: pokemon} )
+      .exec((err, pokemon)=>{
+        if (err) { console.error(err); }
+        cb(null, pokemon);
+      });
+  }
+  if (typeof pokemon === 'string') {
+    Pokemon.findOne( {name: pokemon} )
+      .exec((err, pokemon)=>{
+        if (err) { console.error(err); }
+        console.log('boop');
+        cb(null, pokemon);
+      });
+  }
 }; 
 
 exports.getAllPokemon = (req, res) => {
@@ -36,6 +47,19 @@ exports.getOnePokemon = (req, res)=> {
     if (!pokemon) {
       exports.getPokemonFromExternalAPI(id, res);
     } else {
+      res.send(pokemon);
+    }
+  });
+};
+
+exports.getOnePokemonByName = (req, res)=> {
+  let name = req.query.name;
+  exports.getPokemonDB(name, (err, pokemon)=> {
+    if (err) { console.error(err); }
+    if (!pokemon) {
+      exports.getPokemonFromExternalAPI(ma, e, res);
+    } else {
+      console.log('boop');
       res.send(pokemon);
     }
   });
