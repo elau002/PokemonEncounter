@@ -38,6 +38,6 @@
           console.log(err);
         })
        },
-     }
+     },
    }
  </script>

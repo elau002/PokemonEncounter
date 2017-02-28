@@ -27,6 +27,7 @@ const moveSchema = mongoose.Schema({
   effect: String,
   accuracy: Mixed,
   damageType: String,
+  priority: Number,
 });
 
 const abilitySchema = mongoose.Schema({

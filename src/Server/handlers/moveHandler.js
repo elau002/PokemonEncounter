@@ -50,9 +50,10 @@ exports.getMoveFromExternalAPI = (id, res)=> {
         pp: response.pp,
         type: response.type.name,
         power: response.power,
-        effect: response.effect_entries[0].effect,
+        effect: response.effect_entries[0].effect.replace('$effect_chance%', `${response.effect_chance}%`),
         accuracy: response.accuracy,
-        damageType: response.type.name
+        damageType: response.type.name,
+        priority: response.priority
       };
       exports.createMoveDB(entry, (err, move)=>{
         if (err) {
