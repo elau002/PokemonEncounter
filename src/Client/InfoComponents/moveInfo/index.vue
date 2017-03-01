@@ -13,7 +13,7 @@
         <td>{{infoSelect.pp}} </td>
         <td>{{infoSelect.power}}</td>
         <td>{{infoSelect.accuracy}}</td>
-        <td><div class='typeTag' v-bind:id='infoSelect.damageType'>{{infoSelect.damageType[0].toUpperCase() + infoSelect.damageType.slice(1)}}</div></td>
+        <td class='typeTag' v-bind:id='infoSelect.damageType'>{{infoSelect.damageType[0].toUpperCase() + infoSelect.damageType.slice(1)}}</td>
       </tr>
     </table>
     <p>Effect: {{infoSelect.effect}}</p>
@@ -30,7 +30,6 @@
   #moveStats {
     text-align: center;
     font-size: 12px;
-    font-size: 1.1vw;
     overflow: auto;
     border: 1px solid #ddd;
     color: black;
