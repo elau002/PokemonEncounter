@@ -68,7 +68,7 @@ module.exports = {
           console.log(err);
         })
     },
-    GenPokemon: function (gen) {
+    genPokemon: function (gen) {
          this.$data.pokemons = this.$data.generations[gen];
     },
     generateGen: (gen, arr, data)=> {

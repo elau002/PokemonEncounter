@@ -14,7 +14,6 @@ exports.createPokemonDB = (pokemon, cb)=> {
 };
 
 exports.getPokemonDB = (pokemon, cb) => {
-  console.log(typeof pokemon);
   if (typeof pokemon === 'number') {
     Pokemon.findOne( {id: pokemon} )
       .exec((err, pokemon)=>{
@@ -26,7 +25,6 @@ exports.getPokemonDB = (pokemon, cb) => {
     Pokemon.findOne( {name: pokemon} )
       .exec((err, pokemon)=>{
         if (err) { console.error(err); }
-        console.log('boop');
         cb(null, pokemon);
       });
   }
@@ -57,9 +55,8 @@ exports.getOnePokemonByName = (req, res)=> {
   exports.getPokemonDB(name, (err, pokemon)=> {
     if (err) { console.error(err); }
     if (!pokemon) {
-      exports.getPokemonFromExternalAPI(ma, e, res);
+      exports.getPokemonFromExternalAPI(name, res);
     } else {
-      console.log('boop');
       res.send(pokemon);
     }
   });

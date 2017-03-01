@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import ability from '../Components/abilityController.vue';
-import encounter from '../Components/encounterController.vue';
-import logIn from '../Components/logInController.vue';
-import moves from '../Components/movesController.vue';
-import pokemon from '../Components/pokemonController.vue';
-import signUp from '../Components/signUpController.vue'; 
-import type from '../Components/typeController.vue';
+import ability from '../Components/abilityController/index.vue';
+import encounter from '../Components/encounterController/index.vue';
+import logIn from '../Components/logInController/index.vue';
+import moves from '../Components/movesController/index.vue';
+import pokemon from '../Components/pokemonController/index.vue';
+import signUp from '../Components/signUpController/index.vue'; 
+import type from '../Components/typeController/index.vue';
 
 
 const routes = [

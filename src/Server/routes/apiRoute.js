@@ -14,6 +14,7 @@ router.post('/trainer/signup', trainerHandler.createTrainer);
 router.get('/trainer/login', trainerHandler.getTrainer);
 
 router.get('/move', moveHandler.getOneMove);
+router.get('/move/name', moveHandler.getOneMoveByName);
 router.get('/move/all', moveHandler.getAllMoves);
 
 router.get('/abilities', abilityHandler.getOneAbility);

@@ -3,7 +3,7 @@ import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
 
 import router from './Router/router.js';
-import mixin from './Components/mixinComponent.js';
+import mixin from './Components/mixinComponent/index.js';
 
 // import App from './app.vue';
 

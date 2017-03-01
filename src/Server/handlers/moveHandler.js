@@ -13,11 +13,20 @@ exports.createMoveDB = (move, cb)=> {
 };
 
 exports.getMoveDB = (move, cb)=> {
-  Move.findOne( { id: move } )
-  .exec((err, move) => {
-    if (err) { console.error(err); }
-    cb(null, move);
-  }); 
+  if (typeof move === 'number') {
+    Move.findOne( {id: move} )
+      .exec((err, move)=>{
+        if (err) { console.error(err); }
+        cb(null, move);
+      });
+  }
+  if (typeof move === 'string') {
+    Move.findOne( {name: move} )
+      .exec((err, move)=>{
+        if (err) { console.error(err); }
+        cb(null, move);
+      });
+  }
 };
 
 exports.getAllMoves = (req, res)=>{
@@ -30,6 +39,18 @@ exports.getAllMoves = (req, res)=>{
 
 exports.getOneMove = (req, res)=> {
   let name = req.query.id;
+  exports.getMoveDB(name, (err, move)=> {
+    if (err) { console.error(err); }
+    if (!move) {
+      exports.getMoveFromExternalAPI(name, res);
+    } else {
+      res.send(move);
+    }
+  });
+};
+
+exports.getOneMoveByName = (req, res)=> {
+  let name = req.query.name;
   exports.getMoveDB(name, (err, move)=> {
     if (err) { console.error(err); }
     if (!move) {

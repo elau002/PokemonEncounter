@@ -20,7 +20,7 @@
         <div v-for='types in allTypes'>
             <div v-if='selected === types.name'>
                 <div>
-                    <table id='pokeTable' sortable >
+                    <table id='pokeTable'>
                       <thead>
                         <tr>
                             <th> Pokemon </th>
@@ -39,41 +39,16 @@
                             <th> Move </th>
                         </tr>
                         <tr v-for='move in types.moves' v-bind:id='types.name'>
-                            <td v-on:click="getSingleQuery($http, 'move', move, $data)"> {{ move[0].toUpperCase() + move.slice(1) }} </td>
+                            <td v-on:click="getSingleMoveByName($http, move, $data)"> {{ move[0].toUpperCase() + move.slice(1) }} </td>
                         </tr>
                     </table>
                 </div>
                 <div id='moreInfo' v-if='moreInfo'>
                     <div id='infoDiv' v-if='infoSelect.query === "pokemon" '>
-                      <p>Number: {{infoSelect.id}}</p>
-                      <img :src="infoSelect.sprites"/>
-                      <p> {{ infoSelect.name[0].toUpperCase() + infoSelect.name.slice(1) }}</p>
-                      <p>Weight: {{infoSelect.weight/10}} kg </p>
-                      <p v-for='ability in infoSelect.abilities'> {{ability.ability[0].toUpperCase() + ability.ability.slice(1)}}</p>
-                      <ul>
-                        <li v-for='stat in infoSelect.stats'>
-                          <p>{{stat.name[0].toUpperCase() + stat.name.slice(1)}} : {{stat.value}} </p>
-                        </li>
-                      </ul>
-                      <ul>
-                        <li v-for='trait in infoSelect.types.slice().sort((a,b)=>{return a.slot-b.slot})'>
-                          <p>{{trait.slot}}: <div class='typeTag' v-bind:id='trait.type'> {{trait.type[0].toUpperCase() + trait.type.slice(1)}} </div> </p>
-                        </li>
-                      </ul>
+                      <pokemon-info :info-select='infoSelect'></pokemon-info>
                     </div>
                     <div id='infoDiv' v-else-if='infoSelect.query === "move" '>
-                      <p> {{ infoSelect.name[0].toUpperCase() + infoSelect.name.slice(1) }}</p>
-                      <div>
-                        <p v-if='infoSelect.power'>Damage : {{infoSelect.power}}</p>
-                        <p v-if='infoSelect.accuracy'>Accuracy: {{infoSelect.accuracy}}</p>
-                        <p>PP: {{infoSelect.pp}} </p>
-                        <ul>
-                          <li>
-                            <p>Type: <div class='typeTag' v-bind:id='infoSelect.damageType'>{{infoSelect.damageType[0].toUpperCase() + infoSelect.damageType.slice(1)}}</div> </p>
-                          </li>
-                        </ul>
-                        <p>Effect: {{infoSelect.effect}}</p>
-                      </div>
+                      <move-info :info-select='infoSelect'></move-info>
                     </div>
                 </div>
             </div>
@@ -83,7 +58,14 @@
 </template>
 
 <script>
-  module.exports = {
+  import pokemonInfo from '../../InfoComponents/pokemonInfo/index.vue';
+  import moveInfo from '../../InfoComponents/moveInfo/index.vue';
+
+  export default {
+    components: {
+        pokemonInfo,
+        moveInfo,
+    },
     data: ()=> {
       return {
         allTypes: null, 
@@ -91,8 +73,6 @@
         moreInfo: null,
         infoSelect: null,
         filter: '',
-        filterPoke: true,
-        filterMove: true,
       }
     },
     created () {
@@ -117,10 +97,10 @@
           data.moreInfo = null;
       },
       findFilter:(string, data) => {
-        filterPokes = document.getElementById('pokeFilter');
-        filterMoves = document.getElementById('moveFilter');
-        pokeTable = document.getElementById('pokeTable').getElementsByTagName('tr');
-        moveTable = document.getElementById('moveTable').getElementsByTagName('tr');
+        let filterPokes = document.getElementById('pokeFilter');
+        let filterMoves = document.getElementById('moveFilter');
+        let pokeTable = document.getElementById('pokeTable').getElementsByTagName('tr');
+        let moveTable = document.getElementById('moveTable').getElementsByTagName('tr');
         if(filterPokes.checked) {
           for(let i = 1; i < pokeTable.length; i++) {
             if(pokeTable[i].innerText.toLowerCase().includes(string)) {
