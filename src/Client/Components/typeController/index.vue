@@ -39,7 +39,7 @@
                             <th> Move </th>
                         </tr>
                         <tr v-for='move in types.moves' v-bind:id='types.name'>
-                            <td v-on:click="getSingleMoveByName($http, move, $data)"> {{ move[0].toUpperCase() + move.slice(1) }} </td>
+                            <td v-on:click="getSingleMoveByName($http, move, $data)"> {{ move[0].toUpperCase() + move.slice(1).replace('-', ' ') }} </td>
                         </tr>
                     </table>
                 </div>
@@ -451,25 +451,12 @@
         background-image: -o-linear-gradient(top, #B8B8D0, #D8D8C0);
         background-image: linear-gradient(to bottom, #B8B8D0, #D8D8C0);
     }
-    th,
-    td,
-    tr {
-        border-radius: 8px;
-        border-bottom: 1px solid #ddd;
-        text-align: center;
-        color: black;
-        text-shadow: 1px 1px grey;
-        box-shadow: 2px 2px 2px grey;
-    }
     table {
         display: inline-block;
     }
     th {
         color: white;
         background: black;
-    }
-    td:hover {
-        cursor: pointer;
     }
     #type {
         display: inline-block;
@@ -517,5 +504,8 @@
         float: left;
         padding-left: 1%;
         z-index: -1;
+    }
+    table#pokeTable, table#moveTable td:hover {
+        cursor: pointer;
     }
 </style>
