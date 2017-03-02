@@ -1,12 +1,24 @@
 <template>
   <div>
     <p>Encounter</p>
-    <button v-on:click.prevent='getSingleQuery("pokemon", encounterRateGen())'>Roll</button>
+    <button v-on:click.prevent='rollGacha($http, $data)'>Roll</button>
+      <div v-if='encounter' class='gachaDiv'>
+          <pokemon-info :info-select='encounter'></pokemon-info>
+      </div>
+
+      <div v-for='poke in previous' id='prevDiv'>
+          <img :src="poke.sprites"/>
+      </div>
   </div>
 </template>
 
 <script>
-module.exports = {
+  import pokemonInfo from '../../InfoComponents/pokemonInfo/index.vue';
+
+export default {
+  components: {
+    pokemonInfo
+  }, 
   data: ()=> {
     return  {
       previous: [],
@@ -14,9 +26,22 @@ module.exports = {
     }
   },
   methods: {
-    encounterRateGen: () =>{
-      return Math.floor(Math.random()* 721);
-    }
+    rollGacha: (http, data) => {
+      http.get('http://localhost:4824/api/pokemon/gacha')
+        .then((res)=> {
+          data.encounter = res.body;
+          data.previous = data.previous.concat(res.body);
+        })
+    }, 
   },
 }
 </script>
+
+<style>
+  #gachaDiv {
+    border: 1px solid black;
+  }
+  #prevDiv {
+    display: inline;
+  }
+</style>
