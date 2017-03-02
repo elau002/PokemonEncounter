@@ -62,46 +62,81 @@ exports.getOnePokemonByName = (req, res)=> {
   });
 };
 
+exports.gachaPokemon = (req, res)=> {
+  let gen = Math.ceil(Math.random() * 100);
+    
+  Pokemon.find()
+    .exec((err, pokemon) => {
+      if (err) { console.error(err); }
+      let sent = false;
+      while (!sent) {
+        let id = Math.floor(Math.random() * 498);
+        console.log(`${gen}%`, id);
+        if (pokemon[id].catchRate < 5 && gen >= 99) {
+          sent = !sent;
+          res.send(pokemon[id]);
+        } else if (pokemon[id].catchRate >= 5 && pokemon[id].catchRate < 50 && gen >= 90 && gen < 99) {
+          sent = !sent;
+          res.send(pokemon[id]);
+        } else if (pokemon[id].catchRate >= 50 && pokemon[id].catchRate < 100 && gen >= 80 && gen < 90) {
+          sent = !sent;
+          res.send(pokemon[id]);    
+        } else if ( pokemon[id].catchRate >= 100 && pokemon[id].catchRate < 150 && gen >= 50 && gen < 80) {
+          sent = !sent;
+          res.send(pokemon[id]);
+        } else if ( pokemon[id].catchRate >= 150 && gen < 50) {
+          sent = !sent;
+          res.send(pokemon[id]);
+        } 
+      }
+    });
+};
+
 exports.getPokemonFromExternalAPI = (id, res)=> {
   rp(pkmnURL + 'pokemon/' + id + '/')
     .then((response, next)=> {
       response = JSON.parse(response);
-      let entry = {
-        id: response.id,
-        name: response.name,
-        weight: response.weight,
-        abilities: response['abilities'].map((ability)=>{
-          return {
-            ability: ability.ability.name,
-            hidden: ability.is_hidden
+      rp(`${pkmnURL}pokemon-species/${id}/`)
+        .then((resp, next) => {
+          let details = JSON.parse(resp);
+          let entry = {
+            id: response.id,
+            name: response.name,
+            weight: response.weight,
+            abilities: response['abilities'].map((ability)=>{
+              return {
+                ability: ability.ability.name,
+                hidden: ability.is_hidden
+              };
+            }),
+            stats: response.stats.map((stat)=>{
+              return {
+                name: stat.stat.name, 
+                value: stat.base_stat
+              };
+            }),
+            sprites: response.sprites.front_default,
+            types: response.types.map((type)=> {
+              return {
+                slot: type.slot,
+                type: type.type.name
+              };
+            }),
+            moves: response.moves.map((move)=> {
+              return {
+                name: move.move.name
+              };
+            }),
+            catchRate: details.capture_rate
           };
-        }),
-        stats: response.stats.map((stat)=>{
-          return {
-            name: stat.stat.name, 
-            value: stat.base_stat
-          };
-        }),
-        sprites: response.sprites.front_default,
-        types: response.types.map((type)=> {
-          return {
-            slot: type.slot,
-            type: type.type.name
-          };
-        }),
-        moves: response.moves.map((move)=> {
-          return {
-            name: move.move.name
-          };
-        })
-      };
-      exports.createPokemonDB(entry, (err, pokemon)=>{
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(pokemon);
-        }
-      });
+          exports.createPokemonDB(entry, (err, pokemon)=>{
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(pokemon);
+            }
+          });
+        });
     })
     .catch((err)=> { console.error(err); });
 };

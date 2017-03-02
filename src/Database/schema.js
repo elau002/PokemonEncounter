@@ -9,7 +9,8 @@ const pokemonSchema = mongoose.Schema({
   stats: Mixed,
   sprites: String,
   types: Mixed,
-  moves: Mixed
+  moves: Mixed,
+  catchRate: Number,
 });
 
 const trainerSchema = mongoose.Schema({
