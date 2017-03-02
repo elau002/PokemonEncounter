@@ -10,40 +10,35 @@ import signUp from '../Components/signUpController/index.vue';
 import type from '../Components/typeController/index.vue';
 
 
-const routes = [
-  {
-    path: '/signup',
-    component: signUp
-  },
-  {
-    path: '/login',
-    component: logIn
-  },
-  {
-    path: '/pokemon',
-    component: pokemon
-  },
-  {
-    path: '/moves',
-    component: moves
-  },
-  {
-    path: '/abilities',
-    component: ability
-  },
-  {
-    path: '/type',
-    component: type
-  },
-  {
-    path: '/encounter',
-    component: encounter,
-  }
-];
-
-const router = new VueRouter ({
-  routes
+export default new VueRouter ({
+  routes: [
+    {
+      path: '/signup',
+      component: signUp
+    },
+    {
+      path: '/login',
+      component: logIn
+    },
+    {
+      path: '/pokemon',
+      component: pokemon
+    },
+    {
+      path: '/moves',
+      component: moves
+    },
+    {
+      path: '/abilities',
+      component: ability
+    },
+    {
+      path: '/type',
+      component: type
+    },
+    {
+      path: '/encounter',
+      component: encounter,
+    }
+  ]
 });
-
-
-export default router;
