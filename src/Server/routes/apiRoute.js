@@ -8,6 +8,7 @@ const typeHandler = require('../handlers/typeHandler.js');
 
 router.get('/pokemon', pokemonHandler.getOnePokemon);
 router.get('/pokemon/name', pokemonHandler.getOnePokemonByName);
+router.get('/pokemon/gacha', pokemonHandler.gachaPokemon);
 router.get('/pokemon/all', pokemonHandler.getAllPokemon);
 
 router.post('/trainer/signup', trainerHandler.createTrainer);
