@@ -1,6 +1,5 @@
 <template>
 <div>
-    <h1> Types </h1>
     <div v-if='selected'>
       <form id='filterForm'>
         <input type='text' v-model='filter'>
