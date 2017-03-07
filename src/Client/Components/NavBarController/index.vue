@@ -15,11 +15,11 @@
             <div class='navTitle'>
               <h1> Pokemon Encounter </h1>
             </div>
-            <div v-if='false' class='registration'>
-            <router-link to='/signup'><a href="#">Sign Up</a>
-            </router-link>
-            <router-link to='/login'><a href="#">Log In</a>
-            </router-link>
+              <div v-if='false' class='registration'>
+              <router-link to='/signup'><a href="#">Sign Up</a>
+              </router-link>
+              <router-link to='/login'><a href="#">Log In</a>
+              </router-link>
             </div>
     </div>
 </template>

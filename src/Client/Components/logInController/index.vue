@@ -18,7 +18,7 @@ module.exports = {
     }
   },
   methods: {
-    logIn: function (user, pass) {
+    logIn (user, pass) {
       let body = {
         username: user,
         password: pass

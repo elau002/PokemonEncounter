@@ -58,7 +58,7 @@ module.exports = {
     this.getAllPokemon();
   },
   methods: {
-     getAllPokemon: function() {
+     getAllPokemon () {
       this.$http.get('http://localhost:4824/api/pokemon/all')
         .then((res)=> {
           this.$data.allGen = res.body;
@@ -68,10 +68,10 @@ module.exports = {
           console.log(err);
         })
     },
-    genPokemon: function (gen) {
+    genPokemon  (gen) {
          this.$data.pokemons = this.$data.generations[gen];
     },
-    generateGen: (gen, arr, data)=> {
+    generateGen  (gen, arr) {
       let temp = [];
       if (gen === 1) {  temp = arr.slice(0, 151) }
       if (gen === 2) {  temp = arr.slice(151, 251) }
@@ -79,7 +79,7 @@ module.exports = {
       if (gen === 4) {  temp = arr.slice(386, 493) }
       if (gen === 5) {  temp = arr.slice(493, 649) }
       if (gen === 6) {  temp = arr.slice(649, 721) }
-      data.generations[gen] =  temp
+      this.$data.generations[gen] =  temp
     },
   }
 }

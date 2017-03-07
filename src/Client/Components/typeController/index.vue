@@ -7,12 +7,12 @@
         <label > Pokemons </label>
         <input type='checkbox' id='moveFilter' value='move'>
         <label > Moves </label>
-        <input type='submit' v-on:click.prevent='findFilter(filter, $data)'>
+        <input type='submit' v-on:click.prevent='findFilter(filter)'>
       </form>
     </div> 
     <div>
         <div v-for='types in allTypes' id='type'>
-            <div v-on:click.prevent="showPokeOfType($data,types.name)" class='typeTag' v-bind:id='types.name'>
+            <div v-on:click.prevent="showPokeOfType(types.name)" class='typeTag' v-bind:id='types.name'>
                 {{ types.name[0].toUpperCase() + types.name.slice(1) }}
             </div>
         </div>
@@ -27,7 +27,7 @@
                       </thead>
                       <tbody>
                         <tr v-for='poke in types.pokemon' v-bind:id='types.name' >
-                            <td v-on:click="getSinglePokemonByName($http, poke, $data)"> {{ poke[0].toUpperCase() + poke.slice(1) }} </td>
+                            <td v-on:click="getSinglePokemonByName(poke)"> {{ poke[0].toUpperCase() + poke.slice(1) }} </td>
                         </tr>
                       </tbody>
                     </table>
@@ -38,7 +38,7 @@
                             <th> Move </th>
                         </tr>
                         <tr v-for='move in types.moves' v-bind:id='types.name'>
-                            <td v-on:click="getSingleMoveByName($http, move, $data)"> {{ move[0].toUpperCase() + move.slice(1).replace('-', ' ') }} </td>
+                            <td v-on:click="getSingleMoveByName(move)"> {{ move[0].toUpperCase() + move.slice(1).replace('-', ' ') }} </td>
                         </tr>
                     </table>
                 </div>
@@ -75,27 +75,27 @@
       }
     },
     created () {
-      this.getAllTypes(this.$http, this.$data);
+      this.getAllTypes();
     },
     methods: {
-      getAllTypes: (http, data)=> {
-        http.get('http://localhost:4824/api/type/all')
+      getAllTypes () {
+        this.$http.get('http://localhost:4824/api/type/all')
         .then((res)=> {
-          data.allTypes = res.body;
+          this.$data.allTypes = res.body;
         })
         .catch((err)=> {
           console.log(err);
         })
        },
-      showPokeOfType: (data, type)=> {
-        if(data.selected !== type) {
-          data.selected = type;
+      showPokeOfType (type) {
+        if(this.$data.selected !== type) {
+          this.$data.selected = type;
         } else {
-          data.selected = null;
+          this.$data.selected = null;
         }
-          data.moreInfo = null;
+          this.$data.moreInfo = null;
       },
-      findFilter:(string, data) => {
+      findFilter (string) {
         let filterPokes = document.getElementById('pokeFilter');
         let filterMoves = document.getElementById('moveFilter');
         let pokeTable = document.getElementById('pokeTable').getElementsByTagName('tr');
@@ -120,7 +120,7 @@
           }
           filterMoves.checked = false;
         }
-        data.filter = '';
+        this.$data.filter = '';
       }
     }
   }

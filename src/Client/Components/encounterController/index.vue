@@ -26,11 +26,11 @@ export default {
     }
   },
   methods: {
-    rollGacha: (http, data) => {
-      http.get('http://localhost:4824/api/pokemon/gacha')
+    rollGacha () {
+      this.$http.get('http://localhost:4824/api/pokemon/gacha')
         .then((res)=> {
-          data.encounter = res.body;
-          data.previous = data.previous.concat(res.body);
+          this.$data.encounter = res.body;
+          this.$data.previous = this.$data.previous.concat(res.body);
         })
     }, 
   },

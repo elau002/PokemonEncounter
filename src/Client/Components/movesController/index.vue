@@ -29,7 +29,7 @@
       this.getAllMoves();
      },
      methods: {
-       getAllMoves: function () {
+       getAllMoves () {
         this.$http.get('http://localhost:4824/api/move/all')
         .then((res)=> {
           this.$data.allMoves = res.body;

@@ -26,7 +26,7 @@
       this.getAbilities();
     },
     methods: {
-      getAbilities: function () {
+      getAbilities () {
         this.$http.get('http://localhost:4824/api/abilities/all')
           .then((res) => {
             this.$data.allAbilities = res.body;
