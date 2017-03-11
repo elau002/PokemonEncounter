@@ -3,7 +3,7 @@
     <div v-if='!loggedIn'>
       <input v-model="username">
       <input type='password' v-model="password">
-      <button v-on:click.prevent="logIn(username, password)">Log In</button>
+      <button @click.prevent="logIn(username, password)">Log In</button>
     </div>
   </div>
 </template>

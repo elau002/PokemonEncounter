@@ -1,13 +1,13 @@
 <template>
   <div>
-    <button v-if='!showAll' v-on:click.prevent="genPokemon(1)">Generation 1</button>
-    <button v-if='!showAll' v-on:click.prevent="genPokemon(2)">Generation 2</button>
-    <button v-if='!showAll' v-on:click.prevent="genPokemon(3)">Generation 3</button>
-    <button v-if='!showAll' v-on:click.prevent="genPokemon(4)">Generation 4</button>
-    <button v-if='!showAll' v-on:click.prevent="genPokemon(5)">Generation 5</button>
-    <button v-if='!showAll' v-on:click.prevent="genPokemon(6)">Generation 6</button>
-    <button v-if='!showAll' v-on:click.prevent="showAll = !showAll">Show All</button>
-    <button v-else v-on:click.prevent="showAll = !showAll">Hide All</button>
+    <button v-if='!showAll' @click.prevent="genPokemon(1)">Generation 1</button>
+    <button v-if='!showAll' @click.prevent="genPokemon(2)">Generation 2</button>
+    <button v-if='!showAll' @click.prevent="genPokemon(3)">Generation 3</button>
+    <button v-if='!showAll' @click.prevent="genPokemon(4)">Generation 4</button>
+    <button v-if='!showAll' @click.prevent="genPokemon(5)">Generation 5</button>
+    <button v-if='!showAll' @click.prevent="genPokemon(6)">Generation 6</button>
+    <button v-if='!showAll' @click.prevent="showAll = !showAll">Show All</button>
+    <button v-else @click.prevent="showAll = !showAll">Hide All</button>
 
     <div>
      <div v-if="showAll">

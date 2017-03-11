@@ -7,12 +7,12 @@
         <label > Pokemons </label>
         <input type='checkbox' id='moveFilter' value='move'>
         <label > Moves </label>
-        <input type='submit' v-on:click.prevent='findFilter(filter)'>
+        <input type='submit' @click.prevent='findFilter(filter)'>
       </form>
     </div> 
     <div>
         <div v-for='types in allTypes' id='type'>
-            <div v-on:click.prevent="showPokeOfType(types.name)" class='typeTag' v-bind:id='types.name'>
+            <div @click.prevent="showPokeOfType(types.name)" class='typeTag' v-bind:id='types.name'>
                 {{ types.name[0].toUpperCase() + types.name.slice(1) }}
             </div>
         </div>

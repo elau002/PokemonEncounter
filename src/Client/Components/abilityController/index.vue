@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1> Abilities </h1>
-    <button v-if='!showAll' v-on:click.prevent="showAll = !showAll">Show All</button>
-    <button v-else v-on:click.prevent="showAll = !showAll">Hide All</button> 
+    <button v-if='!showAll' @click.prevent="showAll = !showAll">Show All</button>
+    <button v-else @click.prevent="showAll = !showAll">Hide All</button> 
     <div v-if="showAll">
       <div v-for='ability in allAbilities'>
           <div>
