@@ -11,10 +11,10 @@
       </div>
       <table id='pokeStats'>
         <tr>
-          <th  v-for='stat in infoSelect.stats'>{{stat.name[0].toUpperCase() + stat.name.slice(1).replace('-', ' ')   }}</th>
+          <th  v-for='stat in infoSelect.stats.slice().reverse()'>{{stat.name[0].toUpperCase() + stat.name.slice(1).replace('-', ' ')   }}</th>
         </tr>
         <tr>
-          <td v-for='stat in infoSelect.stats'>{{stat.value}} </td>
+          <td v-for='stat in infoSelect.stats.slice().reverse()'>{{stat.value}} </td>
         </tr>
       </table>
       <ul>
@@ -27,6 +27,9 @@
 
 <script>
   export default {
+    created () {
+      console.log(this)
+    },
     props: ['infoSelect'],
   }
 </script>
@@ -40,6 +43,6 @@
     box-shadow: 2px 2px 2px grey;
   }
   .abilityTags {
-    display: inline-block;
+    display: inline-flex;
   }
 </style>
