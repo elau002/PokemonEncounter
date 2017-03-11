@@ -18,30 +18,8 @@
         </div>
         <div v-for='types in allTypes'>
             <div v-if='selected === types.name'>
-                <div>
-                    <table id='pokeTable'>
-                      <thead>
-                        <tr>
-                            <th> Pokemon </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for='poke in types.pokemon' v-bind:id='types.name' >
-                            <td v-on:click="getSinglePokemonByName(poke)"> {{ poke[0].toUpperCase() + poke.slice(1) }} </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                </div>
-                <div>
-                    <table id='moveTable'>
-                        <tr>
-                            <th> Move </th>
-                        </tr>
-                        <tr v-for='move in types.moves' v-bind:id='types.name'>
-                            <td v-on:click="getSingleMoveByName(move)"> {{ move[0].toUpperCase() + move.slice(1).replace('-', ' ') }} </td>
-                        </tr>
-                    </table>
-                </div>
+                <pokemon-table :pokemons='types.pokemon' :type-name='types.name' > </pokemon-table>
+                <move-table :moves='types.moves' :type-name='types.name'></move-table>
                 <div id='moreInfo' v-if='moreInfo'>
                     <div id='infoDiv' v-if='infoSelect.query === "pokemon" '>
                       <pokemon-info :info-select='infoSelect'></pokemon-info>
@@ -59,11 +37,16 @@
 <script>
   import pokemonInfo from '../../InfoComponents/pokemonInfo/index.vue';
   import moveInfo from '../../InfoComponents/moveInfo/index.vue';
+  import pokemonTable from '../../TableComponents/pokemonTable/index.vue'
+  import moveTable from '../../TableComponents/moveTable/index.vue'
+
 
   export default {
     components: {
         pokemonInfo,
         moveInfo,
+        pokemonTable,
+        moveTable,
     },
     data: ()=> {
       return {
@@ -76,6 +59,17 @@
     },
     created () {
       this.getAllTypes();
+      this.$on('selected', (data)=> {
+        if (!this.$data.infoSelect) {
+            this.$data.infoSelect = data.body;
+            this.$data.moreInfo = true;
+          } else if (this.$data.infoSelect.name !== data.body.name) {
+            this.$data.infoSelect = data.body;
+            this.$data.moreInfo = true;
+          } else {
+            this.$data.moreInfo = null;
+          }
+      })
     },
     methods: {
       getAllTypes () {
@@ -129,11 +123,11 @@
 
 <style>
     #filterForm {
-      display: inline;
+      display: inline-flex;
     }
     .typeTag {
         border: 1px solid black;
-        border-radius: 8px;
+        border-radius: 10px;
         color: white;
         height: 23px;
         width: 80px;
@@ -141,7 +135,7 @@
         box-shadow: 2px 2px 2px black;
     }
     .typeTag:hover {
-        cursor: pointer;
+        cursor: default;
     }
     #normal {
         background: #A8A878;
@@ -458,7 +452,7 @@
         background: black;
     }
     #type {
-        display: inline-block;
+        display: inline-flex;
         padding: 1% 1% 1% 0px;
     }
     #moreInfo {

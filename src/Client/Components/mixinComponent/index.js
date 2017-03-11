@@ -12,17 +12,8 @@ const mixinComponent = {
     getSinglePokemonByName (name) {
       this.$http.get('http://localhost:4824/api/pokemon/name', { params: { name: name } })
         .then((res) => {
-          if (!this.$data.infoSelect) {
-            res.body.query = 'pokemon';
-            this.$data.infoSelect = res.body;
-            this.$data.moreInfo = true;
-          } else if (this.$data.infoSelect.name !== res.body.name) {
-            res.body.query = 'pokemon';
-            this.$data.infoSelect = res.body;
-            this.$data.moreInfo = true;
-          } else {
-            this.$data.moreInfo = null;
-          }
+          res.body.query = 'pokemon';
+          this.$parent.$emit('selected', res);
         })
         .catch((err) => {
           console.log(err);
@@ -31,17 +22,8 @@ const mixinComponent = {
     getSingleMoveByName (name) {
       this.$http.get('http://localhost:4824/api/move/name', { params: { name: name } })
         .then((res) => {
-          if (!this.$data.infoSelect) {
-            res.body.query = 'move';
-            this.$data.infoSelect = res.body;
-            this.$data.moreInfo = true;
-          } else if (this.$data.infoSelect.name !== res.body.name) {
-            res.body.query = 'move';
-            this.$data.infoSelect = res.body;
-            this.$data.moreInfo = true;
-          } else {
-            this.$data.moreInfo = null;
-          }
+          res.body.query = 'move';
+          this.$parent.$emit('selected', res);
         })
         .catch((err) => {
           console.log(err);
