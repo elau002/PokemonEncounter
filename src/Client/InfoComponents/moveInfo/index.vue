@@ -11,12 +11,14 @@
       </tr>
       <tr>
         <td>{{infoSelect.pp}} </td>
-        <td>{{infoSelect.power}}</td>
-        <td>{{infoSelect.accuracy}}</td>
+        <td v-if='infoSelect.power'>{{infoSelect.power}}</td>
+        <td v-else> - </td>
+        <td v-if='infoSelect.accuracy'>{{infoSelect.accuracy}}</td>
+        <td v-else> - </td>
         <td class='typeTag' v-bind:id='infoSelect.damageType'>{{infoSelect.damageType[0].toUpperCase() + infoSelect.damageType.slice(1)}}</td>
       </tr>
     </table>
-    <p>Effect: {{infoSelect.effect}}</p>
+    <p> Effect: {{infoSelect.effect}} </p>
   </div>
 </template>
 
