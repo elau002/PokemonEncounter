@@ -1,19 +1,20 @@
 <template>
   <div>
     <p>Encounter Pokemon</p>
-    <button @click.prevent='resetGacha(), rollParty()'>Meet Your Team</button>
-    <button @click.prevent='rollGacha(rollOnce)'>Have a wild encounter</button>
-    <button @click.prevent='resetGacha(), rollGacha(goCrazy)'>Have a legendary encounter</button>
-    <button v-if='previous.length' @click.prevent='displayPrevious = !displayPrevious'> Show Past Encounters </button>
-    <button v-if='previous.length' @click.prevent='resetGacha()'> Reset </button>
+    <div v-if='!hidden'>
+      <button @click.prevent='resetGacha(), rollParty()'>Meet Your Team</button>
+      <button @click.prevent='rollGacha(rollOnce)'>Wild Encounter</button>
+      <button @click.prevent='resetGacha(), hidden = !hidden, rollGacha(goCrazy)'>Legendary Encounter</button>
+      <button v-if='previous.length > 6' @click.prevent='displayPrevious = !displayPrevious'> Show Past Encounters </button>
+      <button v-if='previous.length' @click.prevent='resetGacha()'> Reset </button>
+    </div>
       <div v-if='counter > 0'> <p> Encounters: {{ counter }} </p> </div>
       <div v-if='displayPrevious' id='prevDiv' >
-        <div v-for='poke in previous' >
-          <img v-cloak  :src="poke.sprites" @click.prevent='encounter = poke' />
+        <div v-cloak  v-for='poke in previous' class='pokeBoarder'>
+          <img :src="poke.sprites" @click.prevent='encounter = poke' />
           </div>
       </div>
-              &nbsp
-      <div v-if='encounter' class='gachaDiv'>
+      <div v-if='encounter' id='gachaDiv'>
           <pokemon-info :info-select='encounter'></pokemon-info>
       </div>
   </div>
@@ -32,6 +33,7 @@ export default {
       encounter: null,
       counter: 0,
       displayPrevious: false,
+      hidden: false,
     }
   },
   methods: {
@@ -66,6 +68,7 @@ export default {
       if ( legs.indexOf(res.body.id) >= 0 ) {
         this.$data.encounter = res.body;
         this.$data.previous = this.$data.previous.concat(res.body);
+        this.$data.hidden = !this.$data.hidden
       } else {
         this.$data.previous = this.$data.previous.concat(res.body);
         this.rollGacha(this.goCrazy);
@@ -77,7 +80,16 @@ export default {
 
 <style>
   #gachaDiv {
-    border: 1px solid black;
+    border: 1px solid #B3BFC7;
+    display:inline-block;
+    width: 50%;
+    height: 50%;
+    z-index: 10;
+    overflow: auto;
+    max-width: 400px;
+    border-radius: 8px;
+    background: #FAFAFA;
+    box-shadow: 5px 5px 5px grey;
   }
   #prevDiv {
     display: inline-flex;
@@ -86,5 +98,11 @@ export default {
   }
   [v-cloak] {
   display: none;
-}
+  }
+  .pokeBoarder {
+    padding: 5px 5px 5px 5px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 </style>
