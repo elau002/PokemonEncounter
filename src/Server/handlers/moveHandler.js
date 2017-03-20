@@ -1,5 +1,5 @@
 const Move = require('../../Database/models/moveModel.js');
-const db = require('../../Database/config.js');
+const db = require('../../Database/mdbconfig.js');
 const rp = require('request-promise');
 const bodyParser = require('body-parser');
 

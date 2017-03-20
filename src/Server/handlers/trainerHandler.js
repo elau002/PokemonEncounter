@@ -1,5 +1,5 @@
 const Trainer = require('../../Database/models/trainerModel.js');
-const db = require('../../Database/config.js');
+const db = require('../../Database/mdbconfig.js');
 const bcrpyt = require('bcrypt');
 
 const saltRounds = 10;

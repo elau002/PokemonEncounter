@@ -1,5 +1,6 @@
 const Pokemon = require('../../Database/models/pokemonModel.js');
-const db = require('../../Database/config.js');
+const PokemonSQL = require('../../Database/sqlmodels/pokemonModel.js').Pokemon;
+const db = require('../../Database/mdbconfig.js');
 const rp = require('request-promise');
 const bodyParser = require('body-parser');
 
@@ -64,14 +65,15 @@ exports.getOnePokemonByName = (req, res)=> {
 
 exports.gachaPokemon = (req, res)=> {
   let gen = Math.ceil(Math.random() * 100);
-    
+  // PokemonSQL.findAll({ where: {id: 1 }})
+  //   .then((res)=> { console.log(res); } )
+  //   .catch((err) => { console.log(err); } );
   Pokemon.find()
     .exec((err, pokemon) => {
       if (err) { console.error(err); }
       let sent = false;
       while (!sent) {
         let id = Math.floor(Math.random() * 498);
-        console.log(`${gen}%`, id);
         if (pokemon[id].catchRate < 5 && gen >= 99) {
           sent = !sent;
           res.send(pokemon[id]);
