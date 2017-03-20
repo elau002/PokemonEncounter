@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p> {{ infoSelect.name[0].toUpperCase() + infoSelect.name.slice(1).replace('-', ' ') }}</p>
+    <p> {{ infoSelect.name[0].toUpperCase() + infoSelect.name.slice(1).split('-').join(' ') }}</p>
     <div>
     <table id='moveStats'>
       <tr>

@@ -1,29 +1,34 @@
 <template>
   <div>
-    <input v-model='filter'>
-    <button @click.prevent="findMove(filter)">Filter</button>
+    <form v-if='showAll'>
+      <input v-model='filter'>
+      <button @click.prevent="findMove(filter)">Filter</button>
+    </form>
     <button v-if='!showAll' @click.prevent="showAll = !showAll">Show All</button>
     <button v-else @click.prevent="showAll = !showAll">Hide All</button> 
     <div v-if="showAll">
-      <div v-for='move in allMoves'>
-          <div>
-            <p>{{ move.id }}</p>
-            <p>{{ move.name[0].toUpperCase() + move.name.slice(1) }}</p>
-            <p>{{ move.type[0].toUpperCase() + move.type.slice(1) }}</p>
-          </div>
-        </div>
+      <move-table :moves='allMoves'></move-table>
     </div>
   </div>
  </template>
 
+
  <script>
-   module.exports = {
+  import moveInfo from '../../InfoComponents/pokemonInfo/index.vue';
+  import moveTable from '../../TableComponents/moveTable/index.vue'
+
+   export default {
+     components: {
+      moveInfo,
+      moveTable,
+     },
      data: ()=> {
        return {
          filter: '',
          showAll: false,
-         allMoves: null
-       }  
+         allMoves: null,
+         move: null 
+       } 
      },
      created () {
       this.getAllMoves();
