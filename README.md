@@ -1,6 +1,6 @@
 # pokemon_encounter
 
-> Generate encounters with pokemon
+> Blind-box(Gacha-Pon) Encounter with Pokemon
 
 ## Build Setup
 
