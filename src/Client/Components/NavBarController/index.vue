@@ -1,16 +1,22 @@
 <template>
     <div class='navigation'>
-            <div class='routePaths'> 
-              <router-link to='/abilities'><a href="#">Abilities</a>
-              </router-link>
-              <router-link to='/encounter'><a href="#">Encounter</a>
-              </router-link>
+            <div class='routePaths'>
+              <div class='nav'>
+                <router-link to='/abilities'><a href="#">Abilities</a></router-link>
+              </div>
+              <div class='nav'>
+                <router-link to='/encounter'><a href="#">Encounter</a></router-link>
+              </div>
+              <div class='nav'>
               <router-link to='/moves'><a href="#">Moves</a>
               </router-link>
-              <router-link to='/pokemon'><a href="#">Avalible Pokemon</a>
-              </router-link>
-              <router-link to='/type'><a href="#">Types</a>
-              </router-link>
+              </div>
+              <div class='nav'>
+                <router-link to='/pokemon'><a href="#">Avalible Pokemon</a></router-link>
+              </div>
+              <div class='nav'>
+                <router-link to='/type'><a href="#">Types</a></router-link>
+              </div>
             </div>
             <div class='navTitle'>
               <h1> Pokemon Encounter </h1>
@@ -49,5 +55,22 @@
   }
   .routePaths {
     float: left;
+  }
+  .nav {
+    position: relative;
+    display: inline;
+    height: 100%;
+    box-shadow: 0px 5px 5px rgba(0,0,0,.27);
+    z-index: 10;
+    background-color: #E84F6D;
+  }
+  .nav a {
+  text-align: center;
+  text-border: 1px solid black;
+  text-decoration: none;
+  margin-top: 2px;
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, AppleGothic, sans-serif;;
+  color: #FFF;
+  margin: 2px;
   }
 </style>
