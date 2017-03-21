@@ -19,9 +19,10 @@ const mixinComponent = {
           console.log(err);
         });
     },
-    getSingleMoveByName (name) {
+    getSingleMoveByName (name, cb) {
       this.$http.get('http://localhost:4824/api/move/name', { params: { name: name } })
         .then((res) => {
+          if (cb) { cb(res.body); }
           res.body.query = 'move';
           this.$parent.$emit('selected', res);
         })
