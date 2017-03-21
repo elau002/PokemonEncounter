@@ -126,12 +126,10 @@
       display: inline-flex;
     }
     .typeTag {
-        border: 1px solid black;
         border-radius: 10px;
         color: white;
         height: 23px;
         width: 80px;
-        text-shadow: 1px 1px black;
         box-shadow: 2px 2px 2px black;
     }
     .typeTag:hover {
@@ -481,23 +479,6 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
     }
 
-    #pokeTable {
-        box-shadow: 5px 5px 5px grey;
-        height: auto;
-        max-height: 450px;
-        position: relative;
-        overflow: auto;
-        float: left;
-    }
-    #moveTable {
-        box-shadow: 5px 5px 5px grey;
-        height: auto;
-        max-height: 450px;
-        overflow: auto;
-        float: left;
-        padding-left: 1%;
-        z-index: -1;
-    }
     table#pokeTable, table#moveTable td:hover {
         cursor: pointer;
     }

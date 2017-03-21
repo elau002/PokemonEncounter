@@ -23,3 +23,12 @@
     ]
   }
 </script>
+
+<style>
+  #pokeTable {
+      box-shadow: 5px 5px 5px grey;
+      height: auto;
+      max-height: 450px;
+      overflow: auto;
+  }
+</style>
