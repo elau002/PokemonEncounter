@@ -2,7 +2,7 @@
   <div>
       <table id='moveTable'>
           <tr>
-              <th> Move </th>
+              <th> Moves </th>
           </tr>
             <tr v-if='typeName === undefined'  v-for='move in moves' v-bind:id='move.type'>
                 <td @click.prevent="getSingleMoveByName(move)"> {{ move.name[0].toUpperCase() + move.name.slice(1).split('-').join(' ')  }} </td>
