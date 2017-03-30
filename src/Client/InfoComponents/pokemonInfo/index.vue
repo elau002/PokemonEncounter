@@ -27,9 +27,6 @@
 
 <script>
   export default {
-    created () {
-      console.log(this)
-    },
     props: ['infoSelect'],
   }
 </script>
@@ -41,6 +38,10 @@
     border: 1px solid #ddd;
     color: black;
     box-shadow: 2px 2px 2px grey;
+       -webkit-flex-direction: column;
+   flex-direction: column;
+   -webkit-justify-content: flex-start;
+   justify-content: flex-start;
   }
   .abilityTags {
     display: inline-flex;

@@ -77,9 +77,16 @@ export default {
       let legs = [144, 145, 146, 150, 151, 243, 244, 245, 249, 250, 251, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 480, 481, 482, 483, 484, 485, 486, 487, 488, 490, 491, 493, 494, 638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 716, 717, 718, 719, 720, 721]
       this.$data.counter++;
       if ( legs.indexOf(res.id) >= 0 ) {
-        this.$data.encounter = res;
-        this.$data.previous = this.$data.previous.concat(res);
-        this.$data.hidden = !this.$data.hidden
+        Promise.all(res.moves.map((move, index)=> {
+          return new Promise((resolve, reject)=> {
+              this.getSingleMoveByName(move.name, resolve)
+          })
+        }))
+        .then((value) => {
+          this.$data.hidden = !this.$data.hidden
+          res.moves = value;
+          this.$data.encounter = res
+        })
       } else {
         this.$data.previous = this.$data.previous.concat(res);
         this.rollGacha(this.goCrazy);

@@ -16,10 +16,10 @@
                 {{ types.name[0].toUpperCase() + types.name.slice(1) }}
             </div>
         </div>
-        <div v-for='types in allTypes'>
-            <div v-if='selected === types.name'>
+        <div  v-for='types in allTypes'>
+            <div v-if='selected === types.name' id='tableFlexContainer'>
                 <pokemon-table :pokemons='types.pokemon' :type-name='types.name' > </pokemon-table>
-                <move-table :moves='types.moves' :type-name='types.name'></move-table>
+                <move-table  :moves='types.moves' :type-name='types.name'></move-table>
                 <div id='moreInfo' v-if='moreInfo'>
                     <div id='infoDiv' v-if='infoSelect.query === "pokemon" '>
                       <pokemon-info :info-select='infoSelect'></pokemon-info>
@@ -450,6 +450,15 @@
         background: black;
     }
     #type {
+           display: -webkit-flex;
+   -webkit-align-items: center;
+   align-items: center;
+   -webkit-justify-content: center;
+   justify-content: center;
+   -webkit-flex-flow: column wrap;
+   flex-flow: column wrap;
+   -webkit-align-content: stretch;
+   align-content: stretch;
         display: inline-flex;
         padding: 1% 1% 1% 0px;
     }
@@ -481,5 +490,13 @@
 
     table#pokeTable, table#moveTable td:hover {
         cursor: pointer;
+    }
+    #tableFlexContainer {
+   display: -webkit-flex;
+   display: flex;
+   -webkit-flex-direction: row; 
+   flex-direction: row;
+   -webkit-align-items: flex-start;
+   align-items: flex-start;
     }
 </style>

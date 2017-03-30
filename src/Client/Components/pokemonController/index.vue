@@ -10,15 +10,13 @@
     <button v-else @click.prevent="showAll = !showAll">Hide All</button>
 
     <div>
-     <div v-if="showAll">
+     <div id='pokePage'  v-if="showAll">
         <div v-for='pokemon in allGen'>
+          {{ pokemon.id }} {{ pokemon.name[0].toUpperCase() + pokemon.name.slice(1) }}
           <img :src="pokemon.sprites"/>
-          <div>
-            <p>{{pokemon.id}} {{pokemon.name}}</p>
-          </div>
         </div>
-      </div>
-      <div v-else>
+    </div>
+      <div id='pokePage' v-else>
         <div v-for='pokemon in pokemons'>
           <pokemon-info :info-select='pokemon'></pokemon-info>
         </div>
@@ -75,3 +73,26 @@ export default {
 }
 
 </script>
+
+<style>
+  #pokePage {
+   display: -webkit-flex;
+   display: flex;
+   -webkit-align-items: center;
+   align-items: center;
+   -webkit-justify-content: center;
+   justify-content: center;
+   /* You can set flex-wrap and flex-direction individually */
+   -webkit-flex-direction: row;
+   flex-direction: row;
+   -webkit-flex-wrap: wrap;
+   flex-wrap: wrap;
+   /* Or do it all in one line with flex flow */
+   -webkit-flex-flow: row wrap;
+   flex-flow: row wrap;
+   /* tweak the where items line up on the row */
+   /* valid values are: flex-start, flex-end, space-between, space-around, stretch */
+   -webkit-align-content: flex-end;
+   align-content: flex-end;
+  }
+</style>
