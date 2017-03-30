@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoURI = 'mongodb://localhost/pokemonEncounter';
+mongoURI = 'mongodb://elau002:elau002@ds143340.mlab.com:43340/heroku_d5vsssn0';
 mongoose.connect(mongoURI);
 
 const db = mongoose.connection;

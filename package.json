@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "author": "Eric Lau <elau002@gmail.com>",
   "private": true,
+  "main" : "src/Server/server.js",
   "scripts": {
-    "start": "nodemon src/Server/server.js",
+    "start": "node src/Server/server.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
