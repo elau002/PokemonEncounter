@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const database = require('../psqlconfig.js').database;
 const Pokemon = require('./pokemonModel.js').Pokemon;
-const Move = require('./movemodel.js').Move;
+const Move = require('./moveModel.js').Move;
 
 const Type = database.define('type', {
   id: { type: 'INTEGER', primaryKey: true },
